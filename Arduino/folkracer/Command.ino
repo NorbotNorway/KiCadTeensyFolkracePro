@@ -22,11 +22,18 @@ void Run(String command)
     int cm = getSensorDistanceInCm(sensornumber);
     Trace(cm);
   }
-  else if (command.startsWith("speed"))
+  else if (command == "speed")
   {
-    Trace("Want to do something with speed?");
+    int speed = getSetting("speed");
+    Trace("Speed");
+    Trace(speed);
   }
-  else if (command == "settings")
+  else if (command.startsWith("speed "))
+  {
+    int newSpeed = command.substring(command.indexOf(' '), 10).toInt();
+    set("speed", newSpeed);
+  }
+  else if (command == "setting")
   {
     Trace("TODO: Print out all settings");
   }

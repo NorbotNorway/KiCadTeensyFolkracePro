@@ -16,6 +16,7 @@ extern "C"
 {
   #include "utility/twi.h" //from Wire library, so we can do bus scanning
 }
+#include <EEPROM.h>
 #include "config.h" 
 
 void setup() {
