@@ -1,0 +1,7 @@
+Problems with this card:
+
+- The 4-pin sensorheaders are reversed. They don't match the colorcodes on the wires. Need to mirror the connections. Switch pins 1 and 4, and 2 and 3.
+
+- Bluetooth header is too close to the 3-pin headers. Bluetooth header should be turned around, or moved.
+
+- Too big.
