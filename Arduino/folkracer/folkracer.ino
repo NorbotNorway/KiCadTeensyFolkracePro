@@ -11,7 +11,11 @@
  * - Two WS2812b neopixel leds
  * - EEPROM (on Teensy) for configuration
  */
-
+#include <Wire.h>
+extern "C"
+{
+  #include "utility/twi.h" //from Wire library, so we can do bus scanning
+}
 #include "config.h" 
 
 void setup() {
@@ -24,28 +28,25 @@ void setup() {
   //Bluetooth
   Serial1.begin(SERIAL_BAUD_BLUETOOTH);
 
+  //I2C
+  Wire.begin();
+  delay(50);
+
   Trace("Setup completed");
 }
 
 int loopCount = 0;
 void loop() {
-  Trace("Loop start");
+  //Trace("Loop start");
   loopCount++;
   
   //digitalWrite(LED_PIN, !digitalRead(LED_PIN));
 
   while(Serial1.available())
   {
-    int bdata = Serial1.read();
-    Trace(bdata);
-    if (bdata == '1') {
-      digitalWrite(LED_PIN, HIGH);
-    }
-    else
-    {
-      digitalWrite(LED_PIN, LOW);
-    }  
+    String command = Serial1.readStringUntil('\r');
+    Run(command);
   }
   
-  delay(100);
+  //delay(100);
 }
