@@ -22,6 +22,7 @@ extern "C"
 
 Servo servoSteering;
 Servo servoMotor;
+volatile startmoduleStates startmodule_state = WAITING;
 
 void setup() {
   //Serial via USB
@@ -48,28 +49,52 @@ void setup() {
   Trace("OK");
 
   TraceNoLine("Setting up sensors...");
-  //setupIRSensors();
+  setActiveSensor(0);
+  setupIRSensors();
   Trace("OK");
 
 
   //delay(3000);
 
   Trace("******* Setup completed! ********");  
-  ledBlink(5);
+  //ledBlink(5);
 
   //set("avg", 5);
-  TraceNoLine("Average set to: ");
-  Trace(getSetting("avg"));
+  //TraceNoLine("Average set to: ");
+  //Trace(getSetting("avg"));
 }
 
 void loop() {
-//Trace("loop");
+
   //Any incoming bluetooth commands?
   while(Serial1.available())
   {
     String command = Serial1.readStringUntil('\r');
     Run(command);
   }
+
+  if (startmodule_state == WAITING)
+  {
+    carWait();
+  }
+  else if (startmodule_state == RUNNING)
+  {
+    carDrive();
+  }
+  else if (startmodule_state == STOP)
+  {
+    carStop();
+  }
+  else if (startmodule_state == MANUAL)
+  {
+    Trace("In MANUAL mode");
+  }
+  else 
+  {
+    TraceNoLine("Unknown startmodule_state: ");
+    Trace(startmodule_state);
+  }
+
 
 /*
   turnTo(0);

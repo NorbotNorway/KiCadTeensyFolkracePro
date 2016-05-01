@@ -24,9 +24,13 @@ void setupIRSensors()
   Wire.write(SHIFT);
   Wire.endTransmission();
 
-  Wire.requestFrom(SENSOR_ADDRESS, 1);
-  while (Wire.available() == 0);
+  delay(200); //Sometimes the below code never receives data back...
+
+  Wire.requestFrom(SENSOR_ADDRESS, 1, false);
+  while (Wire.available() == 0)
+    Trace("Waiting for TCA to reply...");
   shift = Wire.read();
+  Trace(shift);
 }
 
 //Get raw centimeters from the currently selected I2C IR sensor

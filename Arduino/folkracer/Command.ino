@@ -57,6 +57,28 @@ void Run(String command)
     //set("speed", newSpeed);
     setSpeed(newSpeed);
   }
+  else if (command  == "wait")
+  {
+    startmodule_state = WAITING;
+    TraceNoLine("->In state: ");
+    Trace(startmodule_state);
+  }
+  else if (command == "start" || command == "drive")
+  {
+    startmodule_state = RUNNING;
+    TraceNoLine("->In state: ");
+    Trace(startmodule_state);
+  }
+  else if (command == "stop")
+  {
+    startmodule_state = STOP;
+    TraceNoLine("->In state: ");
+    Trace(startmodule_state);
+  }
+  else if (command == "manual")
+  {
+    startmodule_state = MANUAL;
+  }
   else if (command == "setting")
   {
     Trace("TODO: Print out all settings");
