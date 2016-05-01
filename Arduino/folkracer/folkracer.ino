@@ -17,7 +17,11 @@ extern "C"
   #include "utility/twi.h" //from Wire library, so we can do bus scanning
 }
 #include <EEPROM.h>
-#include "config.h" 
+#include <Servo.h>
+#include "config.h"
+
+Servo servoSteering;
+Servo servoMotor;
 
 void setup() {
   //USB Serial
@@ -34,6 +38,9 @@ void setup() {
   delay(100);
   
   setupIRSensors();
+
+  //Connect servos
+  servoSteering.attach(SERVO_STEERING_PIN);
 
   delay(3000);
 
@@ -54,6 +61,15 @@ void loop() {
     Run(command);
   }
 
+  turnTo(0);
+  delay(1000);
+  turnTo(-90);
+  delay(1000);
+  turnTo(90);
+  delay(1000);
+
+  /*
+
   int sensor0 = getSensorDistanceInCm(0);
   int sensor0AVG = getAveragSensorDistanceInCm(0);
   int sensor1 = getSensorDistanceInCm(1);
@@ -62,6 +78,7 @@ void loop() {
   TraceNoLine(sensor0);
   TraceNoLine(",");
   Trace(sensor0AVG);
+  */
  /*
   TraceNoLine(sensor0);
   TraceNoLine(",");
