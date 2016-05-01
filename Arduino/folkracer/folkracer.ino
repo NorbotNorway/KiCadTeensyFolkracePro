@@ -31,9 +31,11 @@ void setup() {
 
   //I2C
   Wire.begin();
-  delay(50);
+  delay(100);
+  
+  setupIRSensors();
 
-  Trace("Setup completed");
+  Trace("Setup completed");  
 }
 
 int loopCount = 0;
@@ -48,6 +50,15 @@ void loop() {
     String command = Serial1.readStringUntil('\r');
     Run(command);
   }
-  
-  //delay(100);
+
+  int sensor0 = getSensorDistanceInCm(0);
+  int sensor1 = getSensorDistanceInCm(1);
+  int sensor7 = getSensorDistanceInCm(7);
+  //int distance = readI2Csensor();
+  TraceNoLine(sensor0);
+  TraceNoLine(",");
+  TraceNoLine(sensor1);
+  TraceNoLine(",");
+  Trace(sensor7);
+  delay(20);
 }
