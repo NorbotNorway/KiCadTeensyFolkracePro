@@ -3,6 +3,8 @@
 
 const int SERVO_STEERING_MIN = 1300; //us
 const int SERVO_STEERING_MAX = 1700; //us
+const int SERVO_MOTOR_MAX = 1900;
+const int SERVO_MOTOR_MIN = 1100;
 
 //Serial
 const int SERIAL_BAUD_USB = 9600;
@@ -10,6 +12,7 @@ const int SERIAL_BAUD_BLUETOOTH = 9600;
 
 //Pins
 const int LED_PIN = 13;
+const int SERVO_MOTOR_PIN = 3;
 const int SERVO_STEERING_PIN = 4;
 
 //Startmodule

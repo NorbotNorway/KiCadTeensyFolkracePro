@@ -54,7 +54,8 @@ void Run(String command)
   else if (command.startsWith("speed "))
   {
     int newSpeed = command.substring(command.indexOf(' '), 10).toInt();
-    set("speed", newSpeed);
+    //set("speed", newSpeed);
+    setSpeed(newSpeed);
   }
   else if (command == "setting")
   {

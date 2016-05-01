@@ -40,15 +40,17 @@ void setup() {
   Wire.begin();
   delay(100);
   Trace("OK");
-
-  TraceNoLine("Setting up sensors...");
-  setupIRSensors();
-  Trace("OK");
-
+  
   //Connect servos
   TraceNoLine("Setting up servos...");
   servoSteering.attach(SERVO_STEERING_PIN);
-  Trace("OK";
+  servoMotor.attach(SERVO_MOTOR_PIN);
+  Trace("OK");
+
+  TraceNoLine("Setting up sensors...");
+  //setupIRSensors();
+  Trace("OK");
+
 
   //delay(3000);
 
