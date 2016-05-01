@@ -24,28 +24,36 @@ Servo servoSteering;
 Servo servoMotor;
 
 void setup() {
-  //USB Serial
+  //Serial via USB
   Serial.begin(SERIAL_BAUD_USB);
+  //Serial via Bluetooth
+  Serial1.begin(SERIAL_BAUD_BLUETOOTH);
+  delay(1000);
+
+  Trace("******* Setup starting... ********");  
 
   //Onboard LED
   pinMode(LED_PIN, OUTPUT);
 
-  //Bluetooth
-  Serial1.begin(SERIAL_BAUD_BLUETOOTH);
-
   //I2C
+  TraceNoLine("Starting Wire..");
   Wire.begin();
   delay(100);
-  
+  Trace("OK");
+
+  TraceNoLine("Setting up sensors...");
   setupIRSensors();
+  Trace("OK");
 
   //Connect servos
+  TraceNoLine("Setting up servos...");
   servoSteering.attach(SERVO_STEERING_PIN);
+  Trace("OK";
 
-  delay(3000);
+  //delay(3000);
 
-  Trace("Setup completed");  
-  
+  Trace("******* Setup completed! ********");  
+  ledBlink(5);
 
   //set("avg", 5);
   TraceNoLine("Average set to: ");
