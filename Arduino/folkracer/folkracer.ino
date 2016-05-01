@@ -35,16 +35,19 @@ void setup() {
   
   setupIRSensors();
 
+  delay(3000);
+
   Trace("Setup completed");  
+  
+
+  //set("avg", 5);
+  TraceNoLine("Average set to: ");
+  Trace(getSetting("avg"));
 }
 
-int loopCount = 0;
 void loop() {
-  //Trace("Loop start");
-  loopCount++;
-  
-  //digitalWrite(LED_PIN, !digitalRead(LED_PIN));
-
+//Trace("loop");
+  //Any incoming bluetooth commands?
   while(Serial1.available())
   {
     String command = Serial1.readStringUntil('\r');
@@ -52,13 +55,21 @@ void loop() {
   }
 
   int sensor0 = getSensorDistanceInCm(0);
+  int sensor0AVG = getAveragSensorDistanceInCm(0);
   int sensor1 = getSensorDistanceInCm(1);
   int sensor7 = getSensorDistanceInCm(7);
-  //int distance = readI2Csensor();
+
   TraceNoLine(sensor0);
   TraceNoLine(",");
+  Trace(sensor0AVG);
+ /*
+  TraceNoLine(sensor0);
+  TraceNoLine(",");
+  //Trace(sensor0AVG);
+  //TraceNoLine(",");
   TraceNoLine(sensor1);
   TraceNoLine(",");
   Trace(sensor7);
+  */
   delay(20);
 }

@@ -4,7 +4,7 @@
 
 
 //Serial
-const int SERIAL_BAUD_USB = 115200;
+const int SERIAL_BAUD_USB = 9600;
 const int SERIAL_BAUD_BLUETOOTH = 9600;
 
 //Pins

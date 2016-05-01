@@ -15,6 +15,24 @@ void Run(String command)
     digitalWrite(LED_PIN, LOW);
     Trace("->LED turned OFF");
   }
+  else if (command.startsWith("led.blink"))
+  {
+    int blinkCount = command.substring(command.indexOf(' '), 10).toInt();
+    for (int i = 0; i <= blinkCount; i++)
+      ledBlink(200);
+    TraceNoLine("->LED blink ");
+    Trace(blinkCount);
+  }
+  else if (command.startsWith("state"))
+  {
+    String newState = command.substring(command.indexOf(' '), 10);
+    //TODO, set new state
+  }
+  else if (command.startsWith("avg"))
+  {
+    int newAvg = command.substring(command.indexOf(' '), 10).toInt();
+    set("avg", newAvg);
+  }
   else if (command.startsWith("sensor"))
   {
     int sensornumber = command.substring(command.indexOf(' '), 10).toInt();

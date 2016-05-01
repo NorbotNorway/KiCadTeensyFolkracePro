@@ -3,7 +3,8 @@
 #define DISTANCE_REG    0x5E
 #define SHIFT           0x35
 
-void tcaSelect(uint8_t i)
+//Change the channel in the TCA I2C multiplexer
+void setActiveSensor(uint8_t i)
 {
   if (i > 7) return;
 
@@ -15,21 +16,22 @@ void tcaSelect(uint8_t i)
 int shift = 0;
 byte hi,low;
 int distance;
+//Initialize I2C sensor
 void setupIRSensors()
 {
-    Wire.beginTransmission(SENSOR_ADDRESS);
+  //TODO, what does the SHIFT register actually contain? And why do we care?
+  Wire.beginTransmission(SENSOR_ADDRESS);
   Wire.write(SHIFT);
   Wire.endTransmission();
 
   Wire.requestFrom(SENSOR_ADDRESS, 1);
   while (Wire.available() == 0);
-  //Serial.println("Wire available!");
   shift = Wire.read();
 }
 
-int readI2Csensor()
+//Get raw centimeters from the currently selected I2C IR sensor
+int readFromActiveSensor()
 {
-  
   Wire.beginTransmission(SENSOR_ADDRESS);
   Wire.write(DISTANCE_REG);
   Wire.endTransmission();
@@ -44,10 +46,32 @@ int readI2Csensor()
   return distance;
 }
 
+//Change active sensor, and read its value.
 int getSensorDistanceInCm(int sensornumber)
 {
   //Set active channel on the TCA I2C multiplexer
-  tcaSelect(sensornumber);
-  int cm = readI2Csensor();
+  setActiveSensor(sensornumber);
+  int cm = readFromActiveSensor();
   return cm;
 }
+
+const int numReadings = 10; //TODO - get from EEPROM
+const int sensorCount = 8; //i.e. Max number of Sharp IR sensors
+int totals[sensorCount];
+int readings[sensorCount][numReadings];
+int readIndexes[sensorCount];
+int getAveragSensorDistanceInCm(int sensorNumber)
+{
+  //TraceNoLine("Totals: ");
+  //Trace(totals[sensorNumber]);
+  totals[sensorNumber] -= readings[readIndexes[sensorNumber]][sensorNumber];
+  int cm = getSensorDistanceInCm(sensorNumber);
+  readings[readIndexes[sensorNumber]][sensorNumber] = cm;
+  totals[sensorNumber] += cm;
+  readIndexes[sensorNumber] = readIndexes[sensorNumber] + 1;
+  if (readIndexes[sensorNumber] > numReadings)
+    readIndexes[sensorNumber] = 0;
+
+  return totals[sensorNumber] / numReadings;
+}
+
