@@ -61,13 +61,14 @@ void loop() {
     Run(command);
   }
 
+/*
   turnTo(0);
   delay(1000);
   turnTo(-90);
   delay(1000);
   turnTo(90);
   delay(1000);
-
+*/
   /*
 
   int sensor0 = getSensorDistanceInCm(0);

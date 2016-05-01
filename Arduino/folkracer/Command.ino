@@ -17,8 +17,8 @@ void Run(String command)
   }
   else if (command.startsWith("led.blink"))
   {
-    int blinkCount = command.substring(command.indexOf(' '), 10).toInt();
-    for (int i = 0; i <= blinkCount; i++)
+    int blinkCount = command.substring(command.indexOf(' '), 15).toInt();
+    for (int i = 0; i < blinkCount; i++)
       ledBlink(200);
     TraceNoLine("->LED blink ");
     Trace(blinkCount);
@@ -32,6 +32,11 @@ void Run(String command)
   {
     int newAvg = command.substring(command.indexOf(' '), 10).toInt();
     set("avg", newAvg);
+  }
+  else if (command.startsWith("steering"))
+  {
+    int newDirection = command.substring(command.indexOf(' '), 15).toInt();
+    turnTo(newDirection);
   }
   else if (command.startsWith("sensor"))
   {
