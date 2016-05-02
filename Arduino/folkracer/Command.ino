@@ -7,12 +7,12 @@ void Run(String command)
     Trace("settings");
   }
   else if (command == "led.on") {
-      digitalWrite(LED_PIN, HIGH);
+      ledOn();
       Trace("->LED turned ON");
   }
   else if (command == "led.off")
   {
-    digitalWrite(LED_PIN, LOW);
+    ledOff();
     Trace("->LED turned OFF");
   }
   else if (command.startsWith("led.blink"))
@@ -33,7 +33,7 @@ void Run(String command)
     int newAvg = command.substring(command.indexOf(' '), 10).toInt();
     set("avg", newAvg);
   }
-  else if (command.startsWith("steering"))
+  else if (command.startsWith("steering") || command.startsWith("turn"))
   {
     int newDirection = command.substring(command.indexOf(' '), 15).toInt();
     turnTo(newDirection);
@@ -78,6 +78,9 @@ void Run(String command)
   else if (command == "manual")
   {
     startmodule_state = MANUAL;
+    TraceNoLine("->In state: ");
+    Trace(startmodule_state);
+    ledOn();
   }
   else if (command == "setting")
   {
@@ -92,4 +95,5 @@ void Run(String command)
     Trace(error);
   }
 }
+
 

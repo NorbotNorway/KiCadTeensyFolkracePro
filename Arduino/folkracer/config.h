@@ -5,8 +5,8 @@ const int SERVO_STEERING_MIN = 1300; //us
 const int SERVO_STEERING_MAX = 1700; //us
 const int SERVO_MOTOR_MAX = 1900;
 const int SERVO_MOTOR_MIN = 1100;
-const int LED_SLOW_BLINK = 750; //ms
-const int LED_FAST_BLINK = 200; //ms
+const int LED_SLOW_BLINK = 800; //ms
+const int LED_FAST_BLINK = 100; //ms
 
 //Serial
 const int SERIAL_BAUD_USB = 9600;
@@ -25,3 +25,4 @@ enum startmoduleStates {
   STOP,
   MANUAL
 };
+

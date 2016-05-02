@@ -6,3 +6,4 @@ void changeStartmoduleState()
   else if (startmodule_state == RUNNING && sm_value == false)
     startmodule_state = STOP;
 }
+

@@ -1,20 +1,20 @@
 /*
- * Frodes Folkrace car for Gothenburg 2016
- * 
- * Features;
- * - Three GP2Y0E02B Sharp Sensors, I2C, 4-50cm
- * - Servo for steering
- * - Servo for motor speed
- * - Bluetooth (for debugging)
- *    - Get telemetry back from car for analysis
- *    - Send commands to car for remote control
- * - Two WS2812b neopixel leds
- * - EEPROM (on Teensy) for configuration
- */
+   Frodes Folkrace car for Gothenburg 2016
+
+   Features;
+   - Three GP2Y0E02B Sharp Sensors, I2C, 4-50cm
+   - Servo for steering
+   - Servo for motor speed
+   - Bluetooth (for debugging)
+      - Get telemetry back from car for analysis
+      - Send commands to car for remote control
+   - Two WS2812b neopixel leds
+   - EEPROM (on Teensy) for configuration
+*/
 #include <Wire.h>
 extern "C"
 {
-  #include "utility/twi.h" //from Wire library, so we can do bus scanning
+#include "utility/twi.h" //from Wire library, so we can do bus scanning
 }
 #include <EEPROM.h>
 #include <Servo.h>
@@ -30,8 +30,8 @@ void setup() {
   //Serial via Bluetooth
   Serial1.begin(SERIAL_BAUD_BLUETOOTH);
   delay(1000);
-
-  Trace("******* Setup starting... ********");  
+  Trace("******* Setup starting... ********");
+  Trace("Serial started for both USB and Bluetooth");
 
   //Onboard LED
   pinMode(LED_PIN, OUTPUT);
@@ -41,7 +41,7 @@ void setup() {
   Wire.begin();
   delay(100);
   Trace("OK");
-  
+
   //Connect servos
   TraceNoLine("Setting up servos...");
   servoSteering.attach(SERVO_STEERING_PIN);
@@ -56,7 +56,7 @@ void setup() {
 
   //delay(3000);
 
-  Trace("******* Setup completed! ********");  
+  Trace("******* Setup completed! ********");
   //ledBlink(5);
 
   //set("avg", 5);
@@ -67,8 +67,9 @@ void setup() {
 void loop() {
 
   //Any incoming bluetooth commands?
-  while(Serial1.available())
+  while (Serial1.available())
   {
+    Trace("Incoming command...");
     String command = Serial1.readStringUntil('\r');
     Run(command);
   }
@@ -89,40 +90,41 @@ void loop() {
   {
     Trace("In MANUAL mode");
   }
-  else 
+  else
   {
     TraceNoLine("Unknown startmodule_state: ");
     Trace(startmodule_state);
   }
 
 
-/*
-  turnTo(0);
-  delay(1000);
-  turnTo(-90);
-  delay(1000);
-  turnTo(90);
-  delay(1000);
-*/
+  /*
+    turnTo(0);
+    delay(1000);
+    turnTo(-90);
+    delay(1000);
+    turnTo(90);
+    delay(1000);
+  */
   /*
 
-  int sensor0 = getSensorDistanceInCm(0);
-  int sensor0AVG = getAveragSensorDistanceInCm(0);
-  int sensor1 = getSensorDistanceInCm(1);
-  int sensor7 = getSensorDistanceInCm(7);
+    int sensor0 = getSensorDistanceInCm(0);
+    int sensor0AVG = getAveragSensorDistanceInCm(0);
+    int sensor1 = getSensorDistanceInCm(1);
+    int sensor7 = getSensorDistanceInCm(7);
 
-  TraceNoLine(sensor0);
-  TraceNoLine(",");
-  Trace(sensor0AVG);
+    TraceNoLine(sensor0);
+    TraceNoLine(",");
+    Trace(sensor0AVG);
   */
- /*
-  TraceNoLine(sensor0);
-  TraceNoLine(",");
-  //Trace(sensor0AVG);
-  //TraceNoLine(",");
-  TraceNoLine(sensor1);
-  TraceNoLine(",");
-  Trace(sensor7);
+  /*
+    TraceNoLine(sensor0);
+    TraceNoLine(",");
+    //Trace(sensor0AVG);
+    //TraceNoLine(",");
+    TraceNoLine(sensor1);
+    TraceNoLine(",");
+    Trace(sensor7);
   */
   delay(20);
 }
+

@@ -79,3 +79,4 @@ int getAveragSensorDistanceInCm(int sensorNumber)
   return totals[sensorNumber] / numReadings;
 }
 
+
