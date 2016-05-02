@@ -5,5 +5,8 @@ void changeStartmoduleState()
     startmodule_state = RUNNING;
   else if (startmodule_state == RUNNING && sm_value == false)
     startmodule_state = STOP;
+
+  TraceNoLine("STATE CHANGED to ");
+  Trace(startmodule_state);
 }
 

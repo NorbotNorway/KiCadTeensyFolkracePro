@@ -48,20 +48,21 @@ void setup() {
   servoMotor.attach(SERVO_MOTOR_PIN);
   Trace("OK");
 
+  //Enable IR sensors
   TraceNoLine("Setting up sensors...");
   setActiveSensor(0);
   setupIRSensors();
   Trace("OK");
 
+  //Listen for changes on the Startmodule
+  TraceNoLine("Setting up Startmodule...");
+  attachInterrupt(STARTMODULE_PIN, changeStartmoduleState, CHANGE);
+  startmodule_state = WAITING;
+  Trace("OK");
 
   //delay(3000);
 
   Trace("******* Setup completed! ********");
-  //ledBlink(5);
-
-  //set("avg", 5);
-  //TraceNoLine("Average set to: ");
-  //Trace(getSetting("avg"));
 }
 
 void loop() {
@@ -69,7 +70,7 @@ void loop() {
   //Any incoming bluetooth commands?
   while (Serial1.available())
   {
-    Trace("Incoming command...");
+    //Trace("Incoming command...");
     String command = Serial1.readStringUntil('\r');
     Run(command);
   }
@@ -88,7 +89,7 @@ void loop() {
   }
   else if (startmodule_state == MANUAL)
   {
-    Trace("In MANUAL mode");
+    //Trace("In MANUAL mode");
   }
   else
   {
