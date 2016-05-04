@@ -3,6 +3,8 @@
 #define SETTING_MAX_SPEED 2 //Set the maximum speed of the motor, in percentage
 #define SETTING_AVG 3
 #define SETTING_DISABLE_MOTOR 4 //Set to something other than 0 to disable motor.
+#define SETTING_PLOT_SPEED 5;   //If set then write speeds to Serial for plotting
+#define SETTING_PLOT_SENSORS 6; //If set then write sensorvalues to Serial for plotting
 
 
 //TCA9548APWR (https://learn.adafruit.com/adafruit-tca9548a-1-to-8-i2c-multiplexer-breakout?view=all)
