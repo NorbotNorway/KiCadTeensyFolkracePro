@@ -56,9 +56,14 @@ void setup() {
 
   //Listen for changes on the Startmodule
   TraceNoLine("Setting up Startmodule...");
+  pinMode(STARTMODULE_PIN, INPUT);
   attachInterrupt(STARTMODULE_PIN, changeStartmoduleState, CHANGE);
   startmodule_state = WAITING;
   Trace("OK");
+
+  TraceNoLine("Configuration...");
+  TraceNoLine("MAX_SPEED: ");
+  Trace(get("max speed"));
 
   //delay(3000);
 

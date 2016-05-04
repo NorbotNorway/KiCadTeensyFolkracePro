@@ -1,7 +1,13 @@
 Problems with this card:
 
-- The 4-pin sensorheaders are reversed. They don't match the colorcodes on the wires. Need to mirror the connections. Switch pins 1 and 4, and 2 and 3.
+- The 4-pin sensorheaders are reversed. They don't match the colorcodes on the wires. Need to mirror the connections. Switch pins 1 and 4, and 2 and 3. The connectors doesn't have to be along the edge of the board.
 
-- Bluetooth header is too close to the 3-pin headers. Bluetooth header should be turned around, or moved.
+- Bluetooth header is too close to the 3-pin headers. Bluetooth header should be turned around, or moved. Maybe move it to the back, and make it a right-angle connector which points bluetooth device backwards?
 
-- Too big.
+- Too big. Card should be slimmer, and longer.
+
+- Startmodule should be plugged directly into a female 3 or 4-pin header. Note the order of the pins!
+
+- LEDS in the front of the PCB which can be used for debugging?
+
+- Power to Startmodule should come from Teensy digital pin, so that it can be powercycled via software. How much current does it draw, and how much can output pin from Teensy supply?
