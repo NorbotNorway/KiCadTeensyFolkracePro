@@ -3,10 +3,12 @@
 #define SETTING_MAX_SPEED 2 //Set the maximum speed of the motor, in percentage
 #define SETTING_AVG 3
 #define SETTING_DISABLE_MOTOR 4 //Set to something other than 0 to disable motor.
-#define SETTING_PLOT_SPEED 5   //If set then write speeds to Serial for plotting
-#define SETTING_PLOT_SENSORS 6 //If set then write sensorvalues to Serial for plotting
+#define SETTING_PLOT_SPEED 5    //If set then write speeds to Serial for plotting
+#define SETTING_PLOT_SENSORS 6  //If set then write sensorvalues to Serial for plotting
 #define SETTING_STEERING_MIN 7  //us, NB two bytes!
 #define SETTING_STEERING_MAX 9  //us, NB two bytes!
+#define SETTING_CRASH_DIST 11   //cm, centimeters to wall from front sensor for detecting crash
+#define SETTING_MIN_SPEED 12  //The minimum speed before motor stalls. Do not go slower than this.
 
 
 //TCA9548APWR (https://learn.adafruit.com/adafruit-tca9548a-1-to-8-i2c-multiplexer-breakout?view=all)
@@ -37,6 +39,7 @@ enum startmoduleStates {
   MANUAL
 };
 
+/*
 //http://forum.arduino.cc/index.php/topic,44702.0.html
 template <class T> int EEPROM_writeAnything(int ee, const T& value)
 {
@@ -56,3 +59,4 @@ template <class T> int EEPROM_readAnything(int ee, T& value)
        *p++ = EEPROM.read(ee++);
    return i;
 }
+*/

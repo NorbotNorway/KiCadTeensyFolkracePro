@@ -32,11 +32,14 @@ volatile startmoduleStates startmodule_state = WAITING;
 
 struct Configuration {
   int maxspeed;
+  int minspeed;
   bool disablemotor;
   bool plotspeed = false;
   bool plotsensors = false;
   int servo_steering_min = 1300; //us
   int servo_steering_max = 1700; //us
+  //int connectorsensorfront;
+  int crashdist;
 };
 
 struct Car {
@@ -96,6 +99,13 @@ void setup() {
 }
 
 void loop() {
+
+//  int a = getAveragSensorDistanceInCm(7);
+//  int r = getSensorDistanceInCm(7);
+//  TraceNoLine(a);
+//  TraceNoLine(",");
+//  Trace(r);
+//  return;
 
   //Any incoming bluetooth commands?
   while (Serial1.available())

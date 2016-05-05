@@ -1,8 +1,10 @@
-
+/*
+ * Control the forward/reverse motion of the car with Servo
+ */
 
 void setSpeed(int speed)
 {
-  int maxSpeed = EEPROM.read(SETTING_MAX_SPEED);
+  int maxSpeed = get("maxspeed"); //EEPROM.read(SETTING_MAX_SPEED);
   if (speed > maxSpeed)
     speed = maxSpeed;
   

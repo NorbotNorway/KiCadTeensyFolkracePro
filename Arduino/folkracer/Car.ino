@@ -13,9 +13,10 @@ void carWait()
 
 void carDrive()
 {
+  
   int speed = calculateMotorSpeed();
-  int direction = calculateDirection();
   car.speed = speed;
+  int direction = calculateDirection();
   car.direction = direction;
 
   //setSpeed(CarSettings.speed);
@@ -35,12 +36,32 @@ void carStop()
 
 int calculateMotorSpeed()
 {
-  int sensor7 = getSensorDistanceInCm(7);
-  if (sensor7 < 20)
-    return 0;
+  int speed = 0;
   
-  //return get("maxspeed"); //TODO
-  return car.config.maxspeed;
+  int frontSensorConnector = 7; //TODO, move to EEPROM?
+  //int frontSensor = getSensorDistanceInCm(frontSensorConnector); //Front sensor
+  int frontSensor = getAveragSensorDistanceInCm(frontSensorConnector);
+  if (frontSensor < car.config.crashdist)
+    speed = car.config.maxspeed * -1;
+  else
+    speed = car.config.maxspeed;
+
+  //If we're turning, then reduce speed
+  if (car.direction < -35 || car.direction > 35) //TODO, values in EEPROM
+    speed = speed / 2;
+
+  //Ensure we don't go below the stall speed
+  if (speed > 0 && speed < car.config.minspeed)
+    speed = car.config.minspeed;
+  else if (speed < 0 && speed > car.config.minspeed*-1)
+    speed = car.config.minspeed * -1;
+
+  if (car.config.plotspeed)
+  {
+    Trace(speed);
+  }
+  
+  return speed; 
 }
 
 int calculateDirection()
@@ -76,6 +97,19 @@ int calculateDirection()
   }
 
   //TODO, reverse direction if we're reversing
+  if (car.speed < 0)
+    newDirection *= -1;
+
+  //if (newDirection < 0 && newDirection > -40)
+//    newDirection = -40;
+//  else if (newDirection > 0 && newDirection < 40)
+    //newDirection = 40;
+  //if (newDirection > 30)
+//    newDirection = 75;
+//  else if (newDirection < 30)
+    //newDirection = -75;
+
+    newDirection *= 3;
   
   return newDirection;
 }

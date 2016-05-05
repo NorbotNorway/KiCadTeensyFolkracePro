@@ -8,18 +8,18 @@ void Run(String command)
     Trace("set <setting> <value>");
    // Trace("settings");
   }
-  else if (command == "led.on") {
+  else if (command == "led on") {
       ledOn();
       Trace("->LED turned ON");
   }
-  else if (command == "led.off")
+  else if (command == "led off")
   {
     ledOff();
     Trace("->LED turned OFF");
   }
-  else if (command.startsWith("led.blink"))
+  else if (command.startsWith("led blink"))
   {
-    int blinkCount = command.substring(command.indexOf(' '), 15).toInt();
+    int blinkCount = command.substring(command.indexOf(' '), command.length()).trim().toInt();
     for (int i = 0; i < blinkCount; i++)
       ledBlink(200);
     TraceNoLine("->LED blink ");
@@ -27,22 +27,22 @@ void Run(String command)
   }
   else if (command.startsWith("state"))
   {
-    String newState = command.substring(command.indexOf(' '), 10);
+    String newState = command.substring(command.indexOf(' '), command.length());
     //TODO, set new state
   }
   else if (command.startsWith("avg"))
   {
-    int newAvg = command.substring(command.indexOf(' '), 10).toInt();
+    int newAvg = command.substring(command.indexOf(' '), command.length()).toInt();
     set("avg", newAvg);
   }
   else if (command.startsWith("steering") || command.startsWith("turn"))
   {
-    int newDirection = command.substring(command.indexOf(' '), 15).toInt();
+    int newDirection = command.substring(command.indexOf(' '), command.length()).toInt();
     turnTo(newDirection);
   }
   else if (command.startsWith("sensor"))
   {
-    int sensornumber = command.substring(command.indexOf(' '), 10).toInt();
+    int sensornumber = command.substring(command.indexOf(' '), command.length()).toInt();
     //Trace(sensornumber);
     int cm = getSensorDistanceInCm(sensornumber);
     Trace(cm);
@@ -55,7 +55,7 @@ void Run(String command)
   }
   else if (command.startsWith("speed "))
   {
-    int newSpeed = command.substring(command.indexOf(' '), 10).toInt();
+    int newSpeed = command.substring(command.indexOf(' '), command.length()).toInt();
     //set("speed", newSpeed);
     setSpeed(newSpeed);
   }
@@ -65,11 +65,8 @@ void Run(String command)
     String name = command.substring(command.indexOf(' '), command.lastIndexOf(' ')).trim();
     int value = command.substring(command.lastIndexOf(' '), command.length()).toInt();
     set(name, value);
-    //EEPROM.write(SETTING_MAX_SPEED, value);
-    //int newValue = EEPROM.read(SETTING_MAX_SPEED);
     TraceNoLine("-->" + name + " set to: ");
     Trace(value);
-    //Trace(newValue);
   }
   else if (command.startsWith("get "))
   {
@@ -85,13 +82,13 @@ void Run(String command)
     TraceNoLine("->In state: ");
     Trace(startmodule_state);
   }
-  else if (command == "start" || command == "drive")
+  else if (command == "start" || command == "drive" || command == "d")
   {
     startmodule_state = RUNNING;
     TraceNoLine("->In state: ");
     Trace(startmodule_state);
   }
-  else if (command == "stop")
+  else if (command == "stop" || command == "s")
   {
     startmodule_state = STOP;
     TraceNoLine("->In state: ");

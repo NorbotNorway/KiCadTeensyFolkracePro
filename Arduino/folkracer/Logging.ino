@@ -1,3 +1,7 @@
+/*
+ * Write to serial, both USB and Bluetooth (or whatever is on Serial1)
+ */
+
 void Trace(const String& message)
 {
   Serial.println(message);

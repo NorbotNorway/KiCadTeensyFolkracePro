@@ -24,7 +24,7 @@ void setupIRSensors()
   Wire.write(SHIFT);
   Wire.endTransmission();
 
-  delay(200); //Sometimes the below code never receives data back...
+  delay(200); //Sometimes the below code never receives data back... Is this really needed?
 
   Wire.requestFrom(SENSOR_ADDRESS, 1, false);
   while (Wire.available() == 0)
@@ -59,19 +59,23 @@ int getSensorDistanceInCm(int sensornumber)
   return cm;
 }
 
-const int numReadings = 10; //TODO - get from EEPROM
-const int sensorCount = 8; //i.e. Max number of Sharp IR sensors
+const int numReadings = 15; //TODO - get from EEPROM
+const int sensorCount = 25; //i.e. Max number of Sharp IR sensors
 int totals[sensorCount];
 int readings[sensorCount][numReadings];
 int readIndexes[sensorCount];
+
 int getAveragSensorDistanceInCm(int sensorNumber)
 {
+  delay(10);
   //TraceNoLine("Totals: ");
   //Trace(totals[sensorNumber]);
-  totals[sensorNumber] -= readings[readIndexes[sensorNumber]][sensorNumber];
+  totals[sensorNumber] = totals[sensorNumber] - readings[readIndexes[sensorNumber]][sensorNumber];
+  //Trace("Totals: ");
+  //Trace(totals[sensorNumber]);
   int cm = getSensorDistanceInCm(sensorNumber);
   readings[readIndexes[sensorNumber]][sensorNumber] = cm;
-  totals[sensorNumber] += cm;
+  totals[sensorNumber] = totals[sensorNumber] + cm;
   readIndexes[sensorNumber] = readIndexes[sensorNumber] + 1;
   if (readIndexes[sensorNumber] > numReadings)
     readIndexes[sensorNumber] = 0;

@@ -1,3 +1,7 @@
+/*
+ * Read and write to the EEPROM
+ */
+
 int get(String name)
 {
   if (name == "speed")
@@ -16,18 +20,25 @@ int get(String name)
   {
     byte first = EEPROM.read(SETTING_STEERING_MIN);
     byte second = EEPROM.read(SETTING_STEERING_MIN+1);
-TraceNoLine("first:" );
-Trace(first);
-TraceNoLine("second:");
-Trace(second);
     return (second << 8) + first;
   }
+  else if (name == "steeringmax")
+  {
+    byte first = EEPROM.read(SETTING_STEERING_MAX);
+    byte second = EEPROM.read(SETTING_STEERING_MAX+1);
+    return (second << 8) + first;
+  }
+  else if (name == "crashdist")
+    return EEPROM.read(SETTING_CRASH_DIST);
+  else if (name == "minspeed")
+    return EEPROM.read(SETTING_MIN_SPEED);
   else 
-    return -1;
+    return -32768; //Int.Min
 }
 
 void set(String name, int value)
 {
+  //First, write the setting to EEPROM
   //Trace("Setting " + name + " to " + value);
   if (name == "speed")
     EEPROM.write(SETTING_SPEED, value);
@@ -45,14 +56,23 @@ void set(String name, int value)
   {
     byte first = (value >> (8*0)) & 0xff;
     byte second = (value >> (8*1)) & 0xff;
-    Trace(first);
-    Trace(second);
     EEPROM.write(SETTING_STEERING_MIN, first);
     EEPROM.write(SETTING_STEERING_MIN+1, second);
-    //EEPROM.write(SETTING_STEERING_MIN, value);
   }
+  else if (name == "steeringmax")
+  {
+    byte first = (value >> (8*0)) & 0xff;
+    byte second = (value >> (8*1)) & 0xff;
+    EEPROM.write(SETTING_STEERING_MAX, first);
+    EEPROM.write(SETTING_STEERING_MAX+1, second);
+  }
+  else if (name == "crashdist")
+   EEPROM.write(SETTING_CRASH_DIST, value);  
+  else if (name == "minspeed")
+   EEPROM.write(SETTING_MIN_SPEED, value);
 
-  car.config = getConfigurationFromEEPROM(); //Reloads entire configuration everytime a value is set.
+  //And then, reload entire configuration from EEPROM
+  car.config = getConfigurationFromEEPROM(); 
 }
 
 Configuration getConfigurationFromEEPROM()
@@ -61,8 +81,12 @@ Configuration getConfigurationFromEEPROM()
   
   config.maxspeed = get("maxspeed");
   config.disablemotor = get("disablemotor") != 0;
-  config.plotspeed = EEPROM.read(SETTING_PLOT_SPEED) != 0;
-  config.plotsensors = EEPROM.read(SETTING_PLOT_SENSORS) != 0;
+  config.plotspeed = get("plotspeed") != 0;
+  config.plotsensors = get("plotsensors") != 0;
+  config.servo_steering_min = get("steeringmin");
+  config.servo_steering_max = get("steeringmax");
+  config.crashdist = get("crashdist");
+  config.minspeed = get("minspeed");
   return config;
 }
 
@@ -70,10 +94,19 @@ void printConfiguration()
 {
   TraceNoLine("\tMaxSpeed:\t");
   Trace(car.config.maxspeed);
+  TraceNoLine("\tMinSpeed:\t");
+  Trace(car.config.minspeed);
   TraceNoLine("\tDisableMotor:\t");
   Trace(car.config.disablemotor);
   TraceNoLine("\tPlotSpeed:\t");
   Trace(car.config.plotspeed);
   TraceNoLine("\tPlotSensors:\t");
   Trace(car.config.plotsensors);
+  TraceNoLine("\tServo Steering Min:\t");
+  Trace(car.config.servo_steering_min);
+  TraceNoLine("\tServo Steering Max:\t");
+  Trace(car.config.servo_steering_max);
+  TraceNoLine("\tCrashDist:\t");
+  Trace(car.config.crashdist);
+
 }
