@@ -104,9 +104,9 @@ void Run(String command)
     Trace(startmodule_state);
     ledOn();
   }
-  else if (command == "setting")
+  else if (command == "config")
   {
-    Trace("TODO: Print out all settings");
+    printConfiguration();
   }
   else if (command == "reboot")
   {

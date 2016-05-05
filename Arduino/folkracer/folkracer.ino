@@ -11,6 +11,12 @@
    - Two WS2812b neopixel leds
    - EEPROM (on Teensy) for configuration
 */
+
+/*
+ * A Car has some configuration values which are mostly pretty static. They are only changed when configuring the Car before a race.
+ * A Car also has some running values which are updated all the time during the race, like speed, direction and state.
+ */
+ 
 #include <Wire.h>
 extern "C"
 {
@@ -23,6 +29,24 @@ extern "C"
 Servo servoSteering;
 Servo servoMotor;
 volatile startmoduleStates startmodule_state = WAITING;
+
+struct Configuration {
+  int maxspeed;
+  bool disablemotor;
+  bool plotspeed = false;
+  bool plotsensors = false;
+  int servo_steering_min = 1300; //us
+  int servo_steering_max = 1700; //us
+};
+
+struct Car {
+  int speed;
+  int direction;
+  Configuration config;
+  //startmoduleStates state; //TODO
+};
+
+Car car;
 
 void setup() {
   //Serial via USB
@@ -61,11 +85,12 @@ void setup() {
   startmodule_state = WAITING;
   Trace("OK");
 
-  TraceNoLine("Configuration...");
-  TraceNoLine("MAX_SPEED: ");
-  Trace(get("max speed"));
+  TraceNoLine("Getting configuration from EEPROM...");
+  car.config = getConfigurationFromEEPROM();
+  Trace("OK");
 
-  //delay(3000);
+  Trace("Current configuration:");
+  printConfiguration();
 
   Trace("******* Setup completed! ********");
 }

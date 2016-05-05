@@ -6,10 +6,12 @@ Problems with this card:
 
 - Too big. Card should be slimmer, and longer.
 
-- Startmodule should be plugged directly into a female 3 or 4-pin header. Note the order of the pins!
+- Startmodule should be plugged directly into a _female_ 3 or 4-pin header. Note the order of the pins!
 
 - LEDS in the front of the PCB which can be used for debugging?
 
 - Power to Startmodule should come from Teensy digital pin, so that it can be powercycled via software. How much current does it draw, and how much can output pin from Teensy supply?
 
 - Need a way to figure out how much juice is left in the battery...
+
+- PCB needs better indication of which connector is which

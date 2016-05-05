@@ -1,23 +1,25 @@
+
+
 void carWait()
 {
   setSpeed(0);
   turnTo(0);
+  car.speed = 0;
+  car.direction = 0;
   //ledBlink(LED_SLOW_BLINK);
 }
 
-/*
-struct CarSettings {
-  int speed;
-  int direction;
-};*/
+
 
 void carDrive()
 {
   int speed = calculateMotorSpeed();
   int direction = calculateDirection();
+  car.speed = speed;
+  car.direction = direction;
 
   //setSpeed(CarSettings.speed);
-  if (EEPROM.read(SETTING_DISABLE_MOTOR) == 0)
+  if (!car.config.disablemotor)
     setSpeed(speed);
   turnTo(direction);
 }
@@ -25,6 +27,8 @@ void carDrive()
 void carStop()
 {
   ledBlink(LED_FAST_BLINK);
+  car.speed = 0;
+  car.direction = 0;
   setSpeed(0);
   turnTo(0);
 }
@@ -35,7 +39,8 @@ int calculateMotorSpeed()
   if (sensor7 < 20)
     return 0;
   
-  return get("maxspeed"); //TODO
+  //return get("maxspeed"); //TODO
+  return car.config.maxspeed;
 }
 
 int calculateDirection()
@@ -61,7 +66,7 @@ int calculateDirection()
   newDirection = value;
   
   //Trace to Plotter?
-  if (EEPROM.read(SETTING_PLOT_SENSORS) > 0)
+  if (car.config.plotsensors)
   {
     TraceNoLine(newDirection);
     TraceNoLine(",");
