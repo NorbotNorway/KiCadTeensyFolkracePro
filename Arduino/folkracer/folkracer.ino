@@ -1,4 +1,13 @@
 /*
+ * TODO
+ * EEPROM for TurnGain
+ * EEPROM for LoopDelay
+ * EEPROM for ReduceSpeedAngle
+ * EEPROM for ReduceSpeedBy
+ * 
+ */
+
+/*
    Frodes Folkrace car for Gothenburg 2016
 
    Features;
@@ -40,6 +49,10 @@ struct Configuration {
   int servo_steering_max = 1700; //us
   //int connectorsensorfront;
   int crashdist;
+  int turngain;
+  int loopdelay;
+  int reducespeedangle;
+  int reducespeedby;
 };
 
 struct Car {
@@ -166,6 +179,6 @@ void loop() {
     TraceNoLine(",");
     Trace(sensor7);
   */
-  delay(20);
+  delay(car.config.loopdelay);
 }
 

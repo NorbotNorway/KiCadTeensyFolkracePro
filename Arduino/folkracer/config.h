@@ -8,8 +8,11 @@
 #define SETTING_STEERING_MIN 7  //us, NB two bytes!
 #define SETTING_STEERING_MAX 9  //us, NB two bytes!
 #define SETTING_CRASH_DIST 11   //cm, centimeters to wall from front sensor for detecting crash
-#define SETTING_MIN_SPEED 12  //The minimum speed before motor stalls. Do not go slower than this.
-
+#define SETTING_MIN_SPEED 12    //The minimum speed before motor stalls. Do not go slower than this.
+#define SETTING_TURN_GAIN 13    //Multiplier for steering. Higher number gives more agressive turning.
+#define SETTING_LOOP_DELAY 14   //Milliseconds to delay each loop
+#define SETTING_REDUCE_SPEED_ANGLE 15 //Angle (degrees) which causes car to go at slower speed
+#define SETTING_REDUCE_SPEED_BY 16  //Multiplier used to reduce speed while turning. F.ex 2 will half the speed.
 
 //TCA9548APWR (https://learn.adafruit.com/adafruit-tca9548a-1-to-8-i2c-multiplexer-breakout?view=all)
 #define TCA_ADDRESS 0x70

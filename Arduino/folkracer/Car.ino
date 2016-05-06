@@ -47,8 +47,8 @@ int calculateMotorSpeed()
     speed = car.config.maxspeed;
 
   //If we're turning, then reduce speed
-  if (car.direction < -35 || car.direction > 35) //TODO, values in EEPROM
-    speed = speed / 2;
+  if (car.direction < -1*car.config.reducespeedangle || car.direction > car.config.reducespeedangle)
+    speed = speed / car.config.reducespeedby;
 
   //Ensure we don't go below the stall speed
   if (speed > 0 && speed < car.config.minspeed)
@@ -109,7 +109,7 @@ int calculateDirection()
 //  else if (newDirection < 30)
     //newDirection = -75;
 
-    newDirection *= 3;
+    newDirection *= car.config.turngain;
   
   return newDirection;
 }

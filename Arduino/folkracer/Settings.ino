@@ -32,6 +32,14 @@ int get(String name)
     return EEPROM.read(SETTING_CRASH_DIST);
   else if (name == "minspeed")
     return EEPROM.read(SETTING_MIN_SPEED);
+  else if (name == "turngain")
+    return EEPROM.read(SETTING_TURN_GAIN);
+  else if (name == "loopdelay")
+    return EEPROM.read(SETTING_LOOP_DELAY);
+  else if (name == "reducespeedangle")
+    return EEPROM.read(SETTING_REDUCE_SPEED_ANGLE);
+  else if (name == "reducespeedby")
+    return EEPROM.read(SETTING_REDUCE_SPEED_BY);
   else 
     return -32768; //Int.Min
 }
@@ -67,9 +75,17 @@ void set(String name, int value)
     EEPROM.write(SETTING_STEERING_MAX+1, second);
   }
   else if (name == "crashdist")
-   EEPROM.write(SETTING_CRASH_DIST, value);  
+    EEPROM.write(SETTING_CRASH_DIST, value);  
   else if (name == "minspeed")
-   EEPROM.write(SETTING_MIN_SPEED, value);
+    EEPROM.write(SETTING_MIN_SPEED, value);
+  else if (name == "turngain")
+    EEPROM.write(SETTING_TURN_GAIN, value);
+  else if (name == "loopdelay")
+    EEPROM.write(SETTING_LOOP_DELAY, value);
+  else if (name == "reducespeedangle")
+    EEPROM.write(SETTING_REDUCE_SPEED_ANGLE, value);
+  else if (name == "reducespeedby")
+    EEPROM.write(SETTING_REDUCE_SPEED_BY, value);
 
   //And then, reload entire configuration from EEPROM
   car.config = getConfigurationFromEEPROM(); 
@@ -87,6 +103,10 @@ Configuration getConfigurationFromEEPROM()
   config.servo_steering_max = get("steeringmax");
   config.crashdist = get("crashdist");
   config.minspeed = get("minspeed");
+  config.turngain = get("turngain");
+  config.loopdelay = get("loopdelay");
+  config.reducespeedangle = get("reducespeedangle");
+  config.reducespeedby = get("reducespeedby");
   return config;
 }
 
@@ -108,5 +128,12 @@ void printConfiguration()
   Trace(car.config.servo_steering_max);
   TraceNoLine("\tCrashDist:\t");
   Trace(car.config.crashdist);
-
+  TraceNoLine("\tTurnGain:\t");
+  Trace(car.config.turngain);
+  TraceNoLine("\tLoopDelay:\t");
+  Trace(car.config.loopdelay);
+  TraceNoLine("\tReduceSpeedAngle:\t");
+  Trace(car.config.reducespeedangle);
+  TraceNoLine("\tReduceSpeedBy:\t");
+  Trace(car.config.reducespeedby);
 }
