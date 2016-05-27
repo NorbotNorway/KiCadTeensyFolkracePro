@@ -40,6 +40,8 @@ int get(String name)
     return EEPROM.read(SETTING_REDUCE_SPEED_ANGLE);
   else if (name == "reducespeedby")
     return EEPROM.read(SETTING_REDUCE_SPEED_BY);
+  else if (name == "reversespeed")
+    return EEPROM.read(SETTING_REVERSE_SPEED);
   else 
     return -32768; //Int.Min
 }
@@ -86,6 +88,8 @@ void set(String name, int value)
     EEPROM.write(SETTING_REDUCE_SPEED_ANGLE, value);
   else if (name == "reducespeedby")
     EEPROM.write(SETTING_REDUCE_SPEED_BY, value);
+  else if (name == "reversespeed")
+    EEPROM.write(SETTING_REVERSE_SPEED, value);
 
   //And then, reload entire configuration from EEPROM
   car.config = getConfigurationFromEEPROM(); 
@@ -107,6 +111,7 @@ Configuration getConfigurationFromEEPROM()
   config.loopdelay = get("loopdelay");
   config.reducespeedangle = get("reducespeedangle");
   config.reducespeedby = get("reducespeedby");
+  config.reversespeed = get("reversespeed");
   return config;
 }
 
@@ -136,4 +141,6 @@ void printConfiguration()
   Trace(car.config.reducespeedangle);
   TraceNoLine("\tReduceSpeedBy:\t");
   Trace(car.config.reducespeedby);
+  TraceNoLine("\tReverseSpeed:\t");
+  Trace(car.config.reversespeed);
 }

@@ -13,6 +13,7 @@
 #define SETTING_LOOP_DELAY 14   //Milliseconds to delay each loop
 #define SETTING_REDUCE_SPEED_ANGLE 15 //Angle (degrees) which causes car to go at slower speed
 #define SETTING_REDUCE_SPEED_BY 16  //Multiplier used to reduce speed while turning. F.ex 2 will half the speed.
+#define SETTING_REVERSE_SPEED 17  //Speed to use when reversing
 
 //TCA9548APWR (https://learn.adafruit.com/adafruit-tca9548a-1-to-8-i2c-multiplexer-breakout?view=all)
 #define TCA_ADDRESS 0x70

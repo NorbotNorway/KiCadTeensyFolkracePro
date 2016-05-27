@@ -59,28 +59,67 @@ int getSensorDistanceInCm(int sensornumber)
   return cm;
 }
 
-const int numReadings = 15; //TODO - get from EEPROM
-const int sensorCount = 25; //i.e. Max number of Sharp IR sensors
-int totals[sensorCount];
-int readings[sensorCount][numReadings];
-int readIndexes[sensorCount];
-
-int getAveragSensorDistanceInCm(int sensorNumber)
+const int numReadings = 6;
+const int pinCount = 2; //i.e. more pins than the Teensy has.
+int readings[pinCount][numReadings]; //Each "Column" contains the sensorreadings. Each "Row" is used for the different pins.
+/*
+ * PIN0 - [reading 1], [reading 2], [reading 3], etc...
+ * PIN1 - [reading 1], [reading 2], [reading 3], etc...
+ * PIN2 - [reading 1], [reading 2], [reading 3], etc...
+ * etc...
+ */
+int readIndexes[pinCount];
+int totals[pinCount]; //The sum from each "Row" pr pin.
+int getAverageSensorDistanceInCm(int pin)
 {
-  delay(10);
-  //TraceNoLine("Totals: ");
-  //Trace(totals[sensorNumber]);
-  totals[sensorNumber] = totals[sensorNumber] - readings[readIndexes[sensorNumber]][sensorNumber];
-  //Trace("Totals: ");
-  //Trace(totals[sensorNumber]);
-  int cm = getSensorDistanceInCm(sensorNumber);
-  readings[readIndexes[sensorNumber]][sensorNumber] = cm;
-  totals[sensorNumber] = totals[sensorNumber] + cm;
-  readIndexes[sensorNumber] = readIndexes[sensorNumber] + 1;
-  if (readIndexes[sensorNumber] > numReadings)
-    readIndexes[sensorNumber] = 0;
+  /*
+   * The sensor value for the pin is stored in the array, and a running total is calulcated, and an average is returned.
+   */
+  totals[pin] = totals[pin] - readings[readIndexes[pin]][pin]; //Remove the oldest sensorreading for this pin.
+  int value = getSensorDistanceInCm(pin);   //Get a new value from the sensor.
+  Trace(value);
+  readings[readIndexes[pin]][pin] = value; //Add the value to the matrix
+  totals[pin] = totals[pin] + value;        //Calculate the total
+  Trace(totals[pin]);
+  readIndexes[pin] = readIndexes[pin] + 1;
+  if (readIndexes[pin] > numReadings)
+    readIndexes[pin] = 0;
 
-  return totals[sensorNumber] / numReadings;
+  return totals[pin] / numReadings;
+}
+
+int lastLeft;
+int lastRight;
+int lastFront;
+void isRobotStuck()
+{
+  if (startmodule_state != RUNNING)
+    return;
+  
+  //Returns true if the sensors have not changed in a while
+  int right = getSensorDistanceInCm(0);
+  int left = getSensorDistanceInCm(1);
+  //int front = getSensorDistanceInCm(7);
+
+  Trace(right);
+  Trace(lastRight);
+  if (abs(right-lastRight) < 3 && abs(left-lastLeft) < 3) //Less than two centimeter change
+  {
+    ledOn();
+    Trace("STUCK!");
+
+    setSpeed(car.config.reversespeed*-1);
+    delay(300);
+    setSpeed(0); //Stop for a while to avoid tipping the car.
+    delay(300);
+  }
+  else 
+  {
+    ledOff();
+  }
+
+  lastRight = right;
+  lastLeft = left;
 }
 
 

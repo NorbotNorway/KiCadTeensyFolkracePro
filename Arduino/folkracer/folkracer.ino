@@ -34,10 +34,12 @@ extern "C"
 #include <EEPROM.h>
 #include <Servo.h>
 #include "config.h"
+#include "SimpleTimer.h"
 
 Servo servoSteering;
 Servo servoMotor;
 volatile startmoduleStates startmodule_state = WAITING;
+SimpleTimer timer;
 
 struct Configuration {
   int maxspeed;
@@ -53,6 +55,7 @@ struct Configuration {
   int loopdelay;
   int reducespeedangle;
   int reducespeedby;
+  int reversespeed;
 };
 
 struct Car {
@@ -94,6 +97,11 @@ void setup() {
   setupIRSensors();
   Trace("OK");
 
+  //Crash detection timer
+  TraceNoLine("Setting up crashdetection...");
+  timer.setInterval(4000, isRobotStuck);
+  Trace("OK");
+
   //Listen for changes on the Startmodule
   TraceNoLine("Setting up Startmodule...");
   pinMode(STARTMODULE_PIN, INPUT);
@@ -119,6 +127,8 @@ void loop() {
 //  TraceNoLine(",");
 //  Trace(r);
 //  return;
+
+  timer.run(); //For crash detections
 
   //Any incoming bluetooth commands?
   while (Serial1.available())

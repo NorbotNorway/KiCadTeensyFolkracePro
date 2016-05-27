@@ -40,9 +40,9 @@ int calculateMotorSpeed()
   
   int frontSensorConnector = 7; //TODO, move to EEPROM?
   //int frontSensor = getSensorDistanceInCm(frontSensorConnector); //Front sensor
-  int frontSensor = getAveragSensorDistanceInCm(frontSensorConnector);
+  int frontSensor = getSensorDistanceInCm(frontSensorConnector);
   if (frontSensor < car.config.crashdist)
-    speed = car.config.maxspeed * -1;
+    speed = car.config.reversespeed * -1;
   else
     speed = car.config.maxspeed;
 
@@ -72,6 +72,9 @@ int calculateDirection()
   int minimum = 10;
   int sensor0 = getSensorDistanceInCm(0)-minimum;
   int sensor1 = getSensorDistanceInCm(1)-minimum-1;
+  int front = getSensorDistanceInCm(7);
+
+  
 
   //Alternative 1
   //Find the center of the raceway. Then figure out how far we are from there, and how to get us there.
@@ -93,7 +96,9 @@ int calculateDirection()
     TraceNoLine(",");
     TraceNoLine(sensor0);
     TraceNoLine(",");
-    Trace(sensor1);
+    TraceNoLine(sensor1);
+    TraceNoLine(",");
+    Trace(front);
   }
 
   //TODO, reverse direction if we're reversing
@@ -109,7 +114,8 @@ int calculateDirection()
 //  else if (newDirection < 30)
     //newDirection = -75;
 
-    newDirection *= car.config.turngain;
+  if (front < 30)
+    newDirection *= car.config.turngain/10;
   
   return newDirection;
 }
