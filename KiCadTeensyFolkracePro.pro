@@ -1,4 +1,4 @@
-update=29.05.2016 13.06.59
+update=23.07.2016 22.56.36
 version=1
 last_client=kicad
 [pcbnew]
@@ -60,3 +60,13 @@ LibName28=atmel
 LibName29=contrib
 LibName30=valves
 LibName31=NorBot
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60

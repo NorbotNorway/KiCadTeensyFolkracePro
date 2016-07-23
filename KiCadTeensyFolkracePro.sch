@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:KiCadTeensyFolkracePro-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -67,7 +68,7 @@ F 3 "" H 6700 3450 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GP2Y0E02B U6
+L GP2Y0E02B-RESCUE-KiCadTeensyFolkracePro U6
 U 1 1 56F5200D
 P 10050 900
 F 0 "U6" H 10050 1200 60  0000 C CNN
@@ -393,7 +394,7 @@ Wire Wire Line
 Connection ~ 8650 750 
 Connection ~ 8650 850 
 $Comp
-L GP2Y0E02B U7
+L GP2Y0E02B-RESCUE-KiCadTeensyFolkracePro U7
 U 1 1 56F6346D
 P 10050 1600
 F 0 "U7" H 10050 1900 60  0000 C CNN
@@ -466,7 +467,7 @@ Wire Wire Line
 Connection ~ 8650 1450
 Connection ~ 8650 1550
 $Comp
-L GP2Y0E02B U8
+L GP2Y0E02B-RESCUE-KiCadTeensyFolkracePro U8
 U 1 1 56F63959
 P 10050 2300
 F 0 "U8" H 10050 2600 60  0000 C CNN
@@ -539,7 +540,7 @@ Wire Wire Line
 Connection ~ 8650 2150
 Connection ~ 8650 2250
 $Comp
-L GP2Y0E02B U9
+L GP2Y0E02B-RESCUE-KiCadTeensyFolkracePro U9
 U 1 1 56F63982
 P 10050 3000
 F 0 "U9" H 10050 3300 60  0000 C CNN
@@ -612,7 +613,7 @@ Wire Wire Line
 Connection ~ 8650 2850
 Connection ~ 8650 2950
 $Comp
-L GP2Y0E02B U10
+L GP2Y0E02B-RESCUE-KiCadTeensyFolkracePro U10
 U 1 1 56F6459A
 P 10050 3700
 F 0 "U10" H 10050 4000 60  0000 C CNN
@@ -685,7 +686,7 @@ Wire Wire Line
 Connection ~ 8650 3550
 Connection ~ 8650 3650
 $Comp
-L GP2Y0E02B U11
+L GP2Y0E02B-RESCUE-KiCadTeensyFolkracePro U11
 U 1 1 56F645C3
 P 10050 4400
 F 0 "U11" H 10050 4700 60  0000 C CNN
@@ -758,7 +759,7 @@ Wire Wire Line
 Connection ~ 8650 4250
 Connection ~ 8650 4350
 $Comp
-L GP2Y0E02B U12
+L GP2Y0E02B-RESCUE-KiCadTeensyFolkracePro U12
 U 1 1 56F645EC
 P 10050 5100
 F 0 "U12" H 10050 5400 60  0000 C CNN
@@ -831,7 +832,7 @@ Wire Wire Line
 Connection ~ 8650 4950
 Connection ~ 8650 5050
 $Comp
-L GP2Y0E02B U13
+L GP2Y0E02B-RESCUE-KiCadTeensyFolkracePro U13
 U 1 1 56F64615
 P 10050 5800
 F 0 "U13" H 10050 6100 60  0000 C CNN
